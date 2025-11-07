@@ -137,18 +137,18 @@ function updateFlicker(dt) {
   spot2.intensity = 0.7 + Math.cos(flickerClock.t * 7.5) * 0.12 + Math.random() * 0.04;
 }
 
-// ----------- PARTICLES ------------
+
 const particleCount = 600;
 const partPos = new Float32Array(particleCount * 3);
-const partSpeed = new Float32Array(particleCount); // each has unique fall speed
+const partSpeed = new Float32Array(particleCount); 
 const partSize = new Float32Array(particleCount);
 
 for (let i = 0; i < particleCount; i++) {
   partPos[i * 3 + 0] = (Math.random() - 0.5) * 40;
-  partPos[i * 3 + 1] = Math.random() * 24; // randomized start height
+  partPos[i * 3 + 1] = Math.random() * 24; 
   partPos[i * 3 + 2] = (Math.random() - 0.5) * 40;
   partSize[i] = Math.random() * 1.6 + 0.4;
-  partSpeed[i] = 0.5 + Math.random() * 0.8; // each falls at its own rate
+  partSpeed[i] = 0.5 + Math.random() * 0.8; 
 }
 
 const partGeo = new THREE.BufferGeometry();
@@ -177,7 +177,7 @@ const partMat = new THREE.PointsMaterial({
 const particles = new THREE.Points(partGeo, partMat);
 scene.add(particles);
 
-// color variation
+
 const emberColors = new Float32Array(particleCount * 3);
 for (let i = 0; i < particleCount; i++) {
   const r = 0.6 + Math.random() * 0.4;
@@ -190,7 +190,7 @@ for (let i = 0; i < particleCount; i++) {
 partGeo.setAttribute('color', new THREE.BufferAttribute(emberColors, 3));
 partMat.vertexColors = true;
 
-// --- CAMERA MOVEMENT CONTROL ---
+
 const keys = { a: false, d: false };
 const rotationSpeed = 1.0;
 
@@ -213,13 +213,13 @@ function animate() {
   const posArr = partGeo.attributes.position.array;
   for (let i = 0; i < particleCount; i++) {
     let idx = i * 3;
-    posArr[idx + 1] -= partSpeed[i] * dt * 2.0; // fall rate varies
+    posArr[idx + 1] -= partSpeed[i] * dt * 2.0; 
 
-    // subtle drift
+  
     posArr[idx + 0] += Math.sin(t * 0.3 + i) * 0.002;
     posArr[idx + 2] += Math.cos(t * 0.25 + i * 0.7) * 0.002;
 
-    // respawn individually
+   
     if (posArr[idx + 1] < -1) {
       posArr[idx + 1] = 20 + Math.random() * 6;
       posArr[idx + 0] = (Math.random() - 0.5) * 40;
@@ -232,7 +232,7 @@ function animate() {
 
   updateFlicker(t);
 
-  // --- A and D CAMERA MOVEMENT ---
+
   if (keys.a) angle += rotationSpeed * dt;
   if (keys.d) angle -= rotationSpeed * dt;
   updateCameraPos();
@@ -251,3 +251,4 @@ window.addEventListener('resize', () => {
 
   
 });
+
